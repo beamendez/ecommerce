@@ -7,7 +7,10 @@ import {
   FETCH_PRODUCT_FAILURE,
   SAVE_PRODUCT_INIT,
   SAVE_PRODUCT_SUCCESS,
-  SAVE_PRODUCT_FAILURE
+  SAVE_PRODUCT_FAILURE,
+  DELETE_PRODUCT_INIT,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_FAILURE
 } from './types'
 import API from '../api'
 
@@ -72,6 +75,26 @@ export function saveProductFailure (error) {
   }
 }
 
+export function deleteProductInit () {
+  return {
+    type: DELETE_PRODUCT_INIT
+  }
+}
+
+export function deleteProductSuccess (product) {
+  return {
+    type: DELETE_PRODUCT_SUCCESS,
+    payload: product
+  }
+}
+
+export function deleteProductFailure (error) {
+  return {
+    type: DELETE_PRODUCT_FAILURE,
+    payload: error
+  }
+}
+
 // Action Creators (Async)
 export function fetchProducts () {
   return async (dispatch) => {
@@ -120,6 +143,23 @@ export function saveProduct (product) {
       return dispatch(saveProductSuccess())
     } catch (error) {
       return dispatch(saveProductFailure(error))
+    }
+  }
+}
+
+export function deleteProduct (productId) {
+  return async (dispatch) => {
+    dispatch(() => {
+      return {
+        type: DELETE_PRODUCT_INIT
+      }
+    })
+
+    try {
+      const data = await API.products.delete(productId)
+      return dispatch(deleteProductSuccess(data.product))
+    } catch (error) {
+      return dispatch(deleteProductFailure(error))
     }
   }
 }

@@ -11,10 +11,15 @@ class ProductDetailContainer extends Component {
     super(props)
 
     this.handleOnAddItem = this.handleOnAddItem.bind(this)
+    this.handleOnRemoveItem = this.handleOnRemoveItem.bind(this)
   }
 
   handleOnAddItem (item) {
     this.props.cartActions.addCartItem(item)
+  }
+
+  handleOnRemoveItem (item) {
+    this.props.productActions.deleteProduct(item)
   }
 
   async componentWillMount () {
@@ -27,6 +32,7 @@ class ProductDetailContainer extends Component {
         loading={this.props.loading}
         product={this.props.product}
         onAddItem={this.handleOnAddItem}
+        onRemoveItem={this.handleOnRemoveItem}
       />
     )
   }
@@ -38,7 +44,8 @@ ProductDetailContainer.propTypes = {
   loading: PropTypes.bool.isRequired,
   productActions: PropTypes.objectOf(PropTypes.func).isRequired,
   cartActions: PropTypes.objectOf(PropTypes.func).isRequired,
-  onAddItem: PropTypes.func
+  onAddItem: PropTypes.func,
+  onRemoveItem: PropTypes.func
 }
 
 function mapStateToProps (state, ownProps) {

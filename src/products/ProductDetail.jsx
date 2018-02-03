@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-const ProductDetail = ({ loading, product, onAddItem }) => {
+const ProductDetail = ({ loading, product, onAddItem, onRemoveItem }) => {
   if (!loading && product) {
     const { _id, name, description, image, price, deliveryStimate, category } = product
 
@@ -27,10 +27,15 @@ const ProductDetail = ({ loading, product, onAddItem }) => {
             </ul>
             <br />
             <button
+              className='btn'
+              onClick={() => onRemoveItem(_id)}>
+              <span className='fa fa-trash' /> Eliminar producto
+            </button>
+            <button
               className='btn btn-primary'
               onClick={() => onAddItem(product)}>
               <span className='fa fa-cart-plus' /> Añadir al carrito
-              </button>
+            </button>
           </div>
         </div>
       </section>
@@ -43,7 +48,8 @@ const ProductDetail = ({ loading, product, onAddItem }) => {
 ProductDetail.propTypes = {
   product: PropTypes.object,
   loading: PropTypes.bool.isRequired,
-  onAddItem: PropTypes.func
+  onAddItem: PropTypes.func,
+  onRemoveItem: PropTypes.func
 }
 
 export default ProductDetail

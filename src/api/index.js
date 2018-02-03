@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch'
 
 // const baseURL = 'https://ecommerce-api-a4661.herokuapp.com/api'
+// const baseURL = 'https://api-rest-test.herokuapp.com/api'
 const baseURL = 'http://localhost:3001/api'
 
 const API = {
@@ -44,6 +45,18 @@ const API = {
           Accept: 'application/json'
         }),
         body: JSON.stringify(item)
+      })
+      const data = await response.json()
+      return data
+    },
+
+    async delete (id) {
+      const response = await fetch(`${baseURL}/products/${id}`, {
+        method: 'DELETE',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        })
       })
       const data = await response.json()
       return data
